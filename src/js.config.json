@@ -1,0 +1,6 @@
+{
+  "cobpilerOptions": {
+    "baseUrl": "src"
+  },
+  "include": ["src"]
+}
