@@ -28,4 +28,5 @@ export const api = createApi({
   }),
 });
 
+//nacn
 export const { useGetCitiesQuery } = api;
