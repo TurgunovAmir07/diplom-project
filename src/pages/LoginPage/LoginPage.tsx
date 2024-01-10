@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../index.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import { setUser } from "../../store/slices/userSlice";
+import { StyledLoginPage } from "./LoginPage.style";
 
 interface ILoginForm {
   useremail: string;
@@ -45,12 +46,15 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const email = useSelector((state: RootState) => state.userSlice.email);
-  const password = useSelector((state: RootState) => state.userSlice.password);
-  const id = useSelector((state: RootState) => state.userSlice.id);
+  const email = useSelector((state: RootState) => state.email);
+  const password = useSelector((state: RootState) => state.password);
+  const id = useSelector((state: RootState) => state.id);
 
   const onLoginSubmit: SubmitHandler<ILoginForm> = () => {
     dispatch(setUser(mockUser));
+
+    localStorage.setItem("mockUser", JSON.stringify(mockUser));
+
     console.log(mockUser.email, mockUser.password, mockUser.id);
     navigate("/");
   };
@@ -60,102 +64,70 @@ const LoginPage = () => {
   }, [email, password, id]);
 
   return (
-    <div className="login-parent-container">
-      <div className="login-container">
-        <form
-          className="login-form"
-          style={{
-            display: "block",
-          }}
-          onSubmit={handleSubmit(onLoginSubmit)}
-        >
-          <h2
-            className="login-title"
+    <StyledLoginPage>
+      <div className="login-parent-container">
+        <div className="login-container">
+          <form
+            className="login-form"
             style={{
-              color: "#fff",
-              fontFamily: "Roboto",
-              fontSize: "32px",
+              display: "block",
             }}
+            onSubmit={handleSubmit(onLoginSubmit)}
           >
-            Login
-          </h2>
-          <Controller
-            name="useremail"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                fullWidth
-                color="info"
-                error={errors.useremail ? true : false}
-                helperText={errors.useremail?.message}
-                type="email"
-                variant="filled"
-                label="enter your email"
-                {...field}
-                sx={{
-                  mt: "10px",
-                  display: "block",
-                  marginBottom: "10px",
-                }}
-              />
-            )}
-          />
-          <Controller
-            name="userpassword"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                fullWidth
-                color="info"
-                error={errors.userpassword ? true : false}
-                helperText={errors.userpassword?.message}
-                type="password"
-                variant="filled"
-                label="enter your password"
-                {...field}
-                sx={{
-                  display: "block",
-                  marginBottom: "10px",
-                }}
-              />
-            )}
-          />
-          <Button
-            variant="outlined"
-            type="submit"
-            fullWidth
-            className="Button"
-            style={{
-              color: "#fff",
-              background: "#003465",
-              marginBottom: "10px",
-            }}
-          >
-            submit
-          </Button>
-          <p
-            style={{
-              color: "#fff",
-              fontFamily: "Roboto",
-              fontWeight: 100,
-            }}
-          >
-            or{" "}
-            <Link
-              to="/registration"
-              style={{
-                color: "#fff",
-                fontFamily: "Roboto",
-                fontWeight: 700,
-                textDecoration: "none",
-              }}
+            <h2 className="login-title">Login</h2>
+            <Controller
+              name="useremail"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  className="Input"
+                  fullWidth
+                  color="info"
+                  error={errors.useremail ? true : false}
+                  helperText={errors.useremail?.message}
+                  type="email"
+                  variant="filled"
+                  label="enter your email"
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              name="userpassword"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  className="Input"
+                  fullWidth
+                  color="info"
+                  error={errors.userpassword ? true : false}
+                  helperText={errors.userpassword?.message}
+                  type="password"
+                  variant="filled"
+                  label="enter your password"
+                  {...field}
+                />
+              )}
+            />
+            <Button
+              variant="outlined"
+              type="submit"
+              fullWidth
+              className="Button"
+              disabled={Object.keys(errors).length > 0}
             >
-              registration
-            </Link>
-          </p>
-        </form>
+              submit
+            </Button>
+            <p className="Link-wrapper">
+              or{" "}
+              <Link className="Link" to="/registration">
+                registration
+              </Link>
+            </p>
+          </form>
+        </div>
       </div>
-    </div>
+    </StyledLoginPage>
   );
 };
 

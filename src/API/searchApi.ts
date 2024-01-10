@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../utils/baseUrl";
 
 interface CountriesResponse {
-  data(data: any): unknown;
+  data(data: string): unknown;
   type: "object";
   properties: {
     data: {
@@ -34,7 +34,7 @@ interface CountriesResponse {
   };
 }
 
-const apiKey = "e26efa5338msh316c617c4c60eaep107696jsn7871eaaac720";
+const apiKey = "e26efa5338msh316c617c4c60eaep107696jsn7871eaaac72";
 
 export const geoApi = createApi({
   reducerPath: "geoApi",
@@ -48,7 +48,7 @@ export const geoApi = createApi({
   }),
   endpoints: (builder) => ({
     getCountry: builder.query<CountriesResponse, string>({
-      query: (countryCode: any | null) => `/v1/geo/countries/${countryCode}`,
+      query: (countryCode: string) => `/v1/geo/countries/${countryCode}`,
     }),
   }),
 });

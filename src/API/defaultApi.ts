@@ -1,9 +1,16 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "../utils/baseUrl";
 
-const apiKey = "e26efa5338msh316c617c4c60eaep107696jsn7871eaaac720";
+const apiKey = "0d4980606emsha59bd49021804ffp18e2d9jsne2b5c3ddb244";
 
 interface City {
+  data: [];
+
+  wikiDataId: string;
+  countryCode: string;
+  regionCode: string;
+  population: string;
+
   name: string;
   country: string;
   region: string;
@@ -22,11 +29,10 @@ export const api = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getCities: builder.query<City, any>({
-      query: () => "/v1/geo/adminDivisions",
+    getCities: builder.query<City, string>({
+      query: () => "/v1/geo/cities",
     }),
   }),
 });
 
-//nacn
 export const { useGetCitiesQuery } = api;

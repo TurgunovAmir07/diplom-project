@@ -1,30 +1,67 @@
 import React from "react";
-import "./Video.module.css";
+import Emoji from "react-emoji-render";
+import { StyledDiv, StyledEmoji } from "./Video.style";
+import { LogOut } from "../logOut/LogOut";
+import { ThemeContext, themes } from "../../utils/theme/themeContext";
+import { useContext } from "react";
+import { Button } from "@mui/material";
+import "../../index.css";
 
 const Video = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  console.log("theme", theme);
+
   return (
     <>
-      {/* <video
-        loop
-        autoPlay
-        muted
-        style={{
-          width: "100%",
-          height: "100%",
-          position: "relative",
-          marginBottom: "100px",
-        }}
-      >
-        <source src="https://static.videezy.com/system/resources/previews/000/004/997/original/iceland_sailboats_harbour.mp4" />
-      </video> */}
-      {/* <img
-        style={{
-          width: "100vw",
-          height: "100vh",
-        }}
-        src="https://images.unsplash.com/photo-1613339027986-b94d85708995?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="nature"
-      /> */}
+      <StyledDiv>
+        <div
+          className="main-container"
+          style={{
+            position: "relative",
+          }}
+        >
+          <video
+            className="video"
+            loop
+            autoPlay
+            muted
+            style={{
+              width: "100%",
+              height: "100%",
+              position: "relative",
+            }}
+          >
+            <source src="/src/components/video/video.mp4" />
+          </video>
+          <StyledEmoji>
+            <Button
+              variant="outlined"
+              onClick={toggleTheme}
+              className={`theme-btn ${theme === themes.dark && "dark"}`}
+              style={{
+                position: "absolute",
+                top: "40px",
+                left: "30px",
+              }}
+            >
+              switch theme
+            </Button>
+            <div className="log-out">
+              <LogOut />
+            </div>
+            <div className="emoji">
+              <Emoji
+                text="🌍Go away"
+                className={`emoji-title ${theme === themes.dark && "dark"}`}
+              />
+              <div className={`emoji-text ${theme === themes.dark && "dark"}`}>
+                Avoid joining a global community of remote workers living and
+                traveling around the world.
+              </div>
+            </div>
+          </StyledEmoji>
+        </div>
+      </StyledDiv>
     </>
   );
 };
